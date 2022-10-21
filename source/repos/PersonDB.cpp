@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "header.h"
 using namespace std;
 
 
@@ -66,9 +67,12 @@ Person* PersonDB::searchPerson(string phonenum){
 void PersonDB::showPersonInfo(string phonenum){
     Person* rtn=searchPerson(phonenum);
     if(rtn==NULL){
-        
+        cout<<"존재하지 않는 회원입니다.";
     }
-}
+    else{
+        cout<<
+    }
+};
 bool PersonDB::deletePerson(string phonenum){
     Person* current=startPoint->next;
     Person* prev=startPoint;
