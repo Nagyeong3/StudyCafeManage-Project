@@ -29,15 +29,34 @@ class PersonDB{
         Person* currentPoint;
     
     private:
+        //LinkedList 관리
         void initLinkedList();
         Person nextPerson();
         bool addPerson(Person target);
-        bool deletePerson(string phonenum); 
-        Person* searchPerson(string phonenum);
-        void showPersonInfo(string phonenum);
+        bool deletePerson(string PhoneNum); 
+        Person* searchPerson(string PhoneNum);
+        void showPersonInfo(string PhoneNum);
+        
+        //File I/O
         bool readFile();
         bool writeFile();
-        bool makeFile();       
+        bool makeFile();      
+        
+        //회원가입
+        bool signup();
+        bool signup(string PhoneNum);
+
+        //검증
+        bool checkPhoneNum(string PhoneNum);
+        bool checkName(string Name);
+        bool checkSeat(string Seat);
+        bool checkDate(string Date);
+
+        //입력
+        string inputPhoneNum();
+        string inputName();
+        string inputSeat();
+        string inputDate();
 };
 void PersonDB::initLinkedList(){
     //초기화
@@ -70,7 +89,19 @@ void PersonDB::showPersonInfo(string phonenum){
         cout<<"존재하지 않는 회원입니다.";
     }
     else{
-        cout<<
+        string output;
+        string currentTime;
+        string leftTime;
+        // Seat seat=new Seat(rtn->Seat);
+        // output=seat.tostring(); 
+        //Time time=new Time();
+        //time.setTime();
+        //currentTime=time.getTime();
+        //leftTime=time.getleftTime(rtn->endDate);
+        //2022-09-28 16:15:54 ] 구본무 고객님 / 단일권 2시간 34분 남았습니다.
+      
+        cout<<currentTime<<"]"<<rtn->Name<<"고객님/"<<output<<" "<<leftTime<<"남았습니다.";
+
     }
 };
 bool PersonDB::deletePerson(string phonenum){
@@ -126,4 +157,36 @@ bool PersonDB::writeFile(){
     }catch(exception &e){
         return false;
     }
+};
+bool PersonDB::signup(){
+    //회원가입
+
+    //checkPhoneNum();
+};
+bool PersonDB::signup(string PhoneNum){
+
+};
+bool PersonDB::checkPhoneNum(string PhoneNum){
+
+};
+bool PersonDB::checkName(string Name){
+
+};
+bool PersonDB::checkSeat(string Seat){
+
+};
+bool PersonDB::checkDate(string Date){
+
+};
+string inputPhoneNum(){
+    
+};
+string inputName(){
+
+};
+string inputSeat(){
+
+};
+string inputDate(){
+
 };

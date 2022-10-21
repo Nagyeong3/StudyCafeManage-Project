@@ -1,10 +1,9 @@
-#ifndef _HEADER_H
-#define _HEADER_H
-
-#include <iostream>
 #include <string>
+#include <iostream>
 #include <fstream>
 
+#ifndef _HEADER_H
+#define _HEADER_H
 struct Person{
 //PersonDB 내의 각 객체 Person
 };
