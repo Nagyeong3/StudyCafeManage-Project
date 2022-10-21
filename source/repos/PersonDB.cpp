@@ -15,7 +15,7 @@ typedef struct Person{
     Person(string num,string name ,string seat,string startdate,string enddate):PhoneNum(num),Name(name),Seat(seat),startDate(startdate),endDate(enddate){
     };
     Person(){
-        Seat=0;
+        Seat="0";
     };
 };
 class PersonDB{
