@@ -33,10 +33,7 @@ class PersonDB{
         Person* search(string phonenum);
         bool readFile();
         bool writeFile();
-        bool makeFile();
-
-
-        
+        bool makeFile();       
 };
 void PersonDB::initLinkedList(){
     currentPoint=startPoint;
