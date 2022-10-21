@@ -13,9 +13,11 @@ typedef struct Person{
     string endDate; 
     Person* next;
     Person(string num,string name ,string seat,string startdate,string enddate):PhoneNum(num),Name(name),Seat(seat),startDate(startdate),endDate(enddate){
+        next=NULL;
     };
     Person(){
         Seat="0";
+        next=NULL;
     };
 };
 class PersonDB{
@@ -30,51 +32,51 @@ class PersonDB{
         Person nextPerson();
         bool addPerson(Person target);
         bool deletePerson(string phonenum); 
-        Person* search(string phonenum);
+        Person* searchPerson(string phonenum);
+        void showPersonInfo(string phonenum);
         bool readFile();
         bool writeFile();
         bool makeFile();       
 };
 void PersonDB::initLinkedList(){
+    //초기화
     currentPoint=startPoint;
 };
 bool PersonDB::addPerson(Person target){
+    //linkedlist에 
     currentPoint->next=&target;
-    currentPoint=currentPoint->next;
+    currentPoint=&target;
     return true;
 };
-Person* PersonDB::search(string phonenum){
-    Person* current=startPoint;
+Person* PersonDB::searchPerson(string phonenum){
+    Person* current=startPoint->next;
     while(true){
         if(current->PhoneNum==phonenum){
-            break;
+            return current;
         }
         else {
             if(current->next!=NULL){
                 current=current->next;
             }else{
-                break;
+                return NULL;
             }
         }
     }
-    return NULL;
 };
-bool PersonDB::deletePerson(string phonenum){
-    Person* current=startPoint;
-    Person* next=startPoint->next;
-    if(current->PhoneNum==phonenum){
-        startPoint=next;
-        return true;
+void PersonDB::showPersonInfo(string phonenum){
+    Person* rtn=searchPerson(phonenum);
+    if(rtn==NULL){
+        
     }
-    while(true){
-        if(next->PhoneNum==phonenum){
+}
+bool PersonDB::deletePerson(string phonenum){
+    Person* current=startPoint->next;
+    Person* prev=startPoint;
+    while(current!=NULL){
+        if(current->PhoneNum==phonenum){
+            prev->next=current->next;
+            free(current);
             return true;
-        }
-        else {
-            current=next;
-            if(next->next!=NULL){
-            next=next->next;    
-            }else break;
         }
     }
     return false;
