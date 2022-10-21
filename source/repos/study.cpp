@@ -13,6 +13,7 @@ int quotient(int first, int second)
 
 int main() 
 {
+	cout << "이찬양 시작" << endl;
 	int num1, num2, result;
 	for (int i = 0; i < 5; i++) 
 	{
