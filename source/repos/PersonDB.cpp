@@ -5,7 +5,7 @@
 using namespace std;
 
 
-typedef struct Person{
+struct Person{
 //PersonDB 내의 각 객체 Person
     string PhoneNum;
     string Name;
@@ -100,7 +100,7 @@ void PersonDB::showPersonInfo(string phonenum){
         //leftTime=time.getleftTime(rtn->endDate);
         //2022-09-28 16:15:54 ] 구본무 고객님 / 단일권 2시간 34분 남았습니다.
       
-        cout<<currentTime<<"]"<<rtn->Name<<"고객님/"<<output<<" "<<leftTime<<"남았습니다.";
+        cout<<currentTime<<"]"<<rtn->Name<<"고객님/"<<output<<" "<<leftTime<<"남았습니다."<<endl;
 
     }
 };
@@ -178,15 +178,35 @@ bool PersonDB::checkSeat(string Seat){
 bool PersonDB::checkDate(string Date){
 
 };
-string inputPhoneNum(){
-    
+string PersonDB::inputPhoneNum(){
+    string PhoneNum;
+    do{
+        cout<<"회원의 전화번호를 입력하세요(-없이):"<<endl;
+        cin>>PhoneNum;
+    }while(!checkPhoneNum(PhoneNum));
+    return PhoneNum;
 };
-string inputName(){
-
+string PersonDB::inputName(){
+    string Name;
+    do{
+        cout<<"회원의 이름을 입력하세요(최대5자):"<<endl;
+        cin>>Name;
+    }while(!checkPhoneNum(Name));
+    return Name;
 };
-string inputSeat(){
-
+string PersonDB::inputSeat(){
+string Seat;
+    do{
+        cout<<"회원권 종류를 입력하세요:"<<endl;
+        cin>>Seat;
+    }while(!checkPhoneNum(Seat));
+    return Seat;
 };
-string inputDate(){
-
-};
+// string PersonDB::inputDate(){
+// string Date;
+//     do{
+//         cout<<"회원의 전화번호를 입력하세요(-없이):"<<endl;
+//         cin>>Date;
+//     }while(!checkPhoneNum(Date));
+//     return Date;
+// };
