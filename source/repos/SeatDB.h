@@ -20,3 +20,4 @@ public:
 	string toChar(string seat);				/* toChar() : 0,1,2 숫자를 '□','▦','■'로 바꿔줌 */
 
 };
+//
