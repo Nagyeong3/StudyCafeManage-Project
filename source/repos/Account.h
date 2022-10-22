@@ -6,9 +6,10 @@ class Account {
 public:
 
 	int totalAccount;
-	readDB();
-	writeDB();
-	payTicket(int price);  //결제
+
+	void readDB();
+	void writeDB();
+	void payTicket(int price);  //결제
 
 
 };

@@ -1,9 +1,13 @@
 #include "Account.h"
+#include "Time.h"
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 using namespace std;
 
-Account::readDB()
+void Account::readDB()
 {
 	ifstream file;
 	file.open("AccountDB.txt");
@@ -13,14 +17,22 @@ Account::readDB()
 		exit(100);
 	}
 
-	totalAccount=file.getline();
+
+	//가격 불러오기
+
+	string read;
+	getline(file, read);
+
+	int finshT;
+	stringstream ssInt(read);
+	ssInt >> totalAccount;
 
 	file.close();
 
 	
 }
 
-Account::writeDB()
+void Account::writeDB()
 {
 	ofstream file;
 	file.open("AccountDB.txt");
@@ -33,10 +45,11 @@ Account::writeDB()
 	file.put(totalAccount);
 
 	file.close();
-	return 0;
+
+	return;
 }
 
-Account::payTicket(int price)
+void Account::payTicket(int price)
 {
 	totalAccount += price;
 
