@@ -21,6 +21,7 @@ int main()
 		cout << "Enter in Integer: ";
 		cin >> num2;
 	
+		cout << "이해나 파이팅!!!!!" << endl;
 		/*if (result == -1)
 
 			cout << "The result of division is:" << result << endl;
