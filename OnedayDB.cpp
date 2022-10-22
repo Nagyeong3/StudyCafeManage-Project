@@ -4,8 +4,10 @@
 
 using namespace std;
 
-typedef struct Oneday
+class Oneday
 {
+public:
+	Oneday* next = nullptr;
 	string DB_phone_num;
 	string DB_payment_date;
 	string DB_expert_date;
@@ -13,77 +15,124 @@ typedef struct Oneday
 	string DB_arrival_time;
 	string DB_departure_time;
 
-	Oneday* next = (Oneday*)malloc(sizeof(Oneday));
+
 	Oneday() {};
 	Oneday(string num, string paydate, string expertdate, string seat, string arrivaltime, string departtime)
 		:DB_phone_num(num), DB_payment_date(paydate), DB_expert_date(expertdate), DB_seat_num(seat), DB_arrival_time(arrivaltime), DB_departure_time(departtime) {};
-}Oneday;
-//typedef struct Node
-//{
-//	Season season;
-//	struct Node* pNext;
-//}Node;
-//
-//Node* pHead = NULL;
-//Node* pTail = NULL;
+};
+
 class OnedayDB
 {
 public:
-	Oneday* start;
-	Oneday* current;
+	Oneday* start = new Oneday();	//시작노드
 
-	bool readFile();
-	bool writeFile();
+	bool readFile();	//oneday.txt 읽는 함수
+	bool writeFile();	//oneday.txt 쓰는 함수
 	//회원가입
 	void signup(string phone_num, string payment_date, string expert_date, string seat_num, string arrival_date, string depart_date);
-	void initList();
-	void AddNode(Oneday _ondeday);	//노드를 연결리스트에 추가하는 함수
-	bool deleteSeason(string phonenum);
-	void ReEntrance();
-	bool searchSeasonDB(string phonenum);	//전번 있으면 true
 
+	void AddNode(Oneday _oneday);	//노드를 연결리스트에 추가하는 함수
+	void printData();
+	bool deleteOneday(string phonenum);
+	int searchOnedayDB(string phonenum);	//전번 있으면 노드인덱스+1 반환
+private:
+	int cntSize = 0;
 };
-void OnedayDB::initList()
-{
-	start = (Oneday*)malloc(sizeof(Oneday));
-	current = start;
-}
+
 //노드를 연결리스트에 추가하는 함수
-void OnedayDB::AddNode(Oneday _season)
+void OnedayDB::AddNode(Oneday _oneday)
 {
-	current->next = &_season;
-	current = current->next;
-	cout << "current checking\n";
-	cout << current->DB_seat_num << endl;
+
+	if (cntSize == 0)
+	{
+		start->DB_phone_num = _oneday.DB_phone_num;
+		start->DB_arrival_time = _oneday.DB_arrival_time;
+		start->DB_departure_time = _oneday.DB_departure_time;
+		start->DB_expert_date = _oneday.DB_expert_date;
+		start->DB_payment_date = _oneday.DB_payment_date;
+		start->DB_seat_num = _oneday.DB_seat_num;
+		start->next = nullptr;
+	}
+	else
+	{
+		Oneday* current = new Oneday();
+		current->DB_phone_num = _oneday.DB_phone_num;
+		current->DB_arrival_time = _oneday.DB_arrival_time;
+		current->DB_departure_time = _oneday.DB_departure_time;
+		current->DB_expert_date = _oneday.DB_expert_date;
+		current->DB_payment_date = _oneday.DB_payment_date;
+		current->DB_seat_num = _oneday.DB_seat_num;
+		current->next = nullptr;
+		Oneday* temp = start;
+		while (temp->next != nullptr)
+		{
+			temp = temp->next;
+		}
+		temp->next = current;
+	}
+	++cntSize;
+}
+void OnedayDB::printData()
+{
+	Oneday* temp = start;
+	cout << "printData:\n";
+	for (int i = 0; i < cntSize; i++)
+	{
+		cout << temp->DB_seat_num << endl;
+		temp = temp->next;
+	}
+}
+//노드 삭제 함수
+bool OnedayDB::deleteOneday(string phonenum)
+{
+	Oneday* temp = start;
+	Oneday* del;
+	Oneday* swap;
+	int nodeIndex = 0;
+	//searchOnedayDB에서 전화번호로 탐색하여 인덱스값을 반환 받음
+	nodeIndex = searchOnedayDB(phonenum) - 1;
+	cout << nodeIndex;
+	if (nodeIndex != 0) {
+		for (int i = 0; i < nodeIndex - 1; i++)
+		{
+			temp = temp->next;
+		}
+		del = temp->next;
+		swap = del->next;
+		temp->next = swap;
+	}
+	else {
+		start = temp->next;
+		del = temp;
+	}
+	delete del;
+	cntSize--;
+	return true;
+
+
 }
 
-bool OnedayDB::deleteSeason(string phonenum)
-{
-	return false;
-}
 
-void OnedayDB::ReEntrance()
-{
-	cout << " 정기권 고객 재입장하였습니다\n";
-}
 
-bool OnedayDB::searchSeasonDB(string phonenum)
+int OnedayDB::searchOnedayDB(string phonenum)
 {
-
+	int nodeIndex = 1;
 	Oneday* current = start;
-	current = current->next;
+	cout << "searchOnedayDB::" << endl;
+	cout << "찾을 전화번호:" << phonenum << endl;
 	while (current != NULL)
 	{
+		cout << "노드속 전화번호:" << current->DB_phone_num << endl;
 		if (current->DB_phone_num == phonenum) {
-			cout << current->DB_phone_num;
-			return true;
+			return nodeIndex;
 		}
 		else {
 			current = current->next;
+			nodeIndex++;
 		}
-		cout << current->DB_phone_num;
 	}
-	return false;
+	cout << "일치하는 회원정보가 없습니다.\n";
+	return 0;
 }
 
 
@@ -91,7 +140,7 @@ bool OnedayDB::readFile()
 {
 	string path = "oneday.txt";
 	ifstream file(path);
-	Oneday oneday;	//Oneday 구조체에 담아갈 변수
+	Oneday oneday;	//Seaon 구조체에 담아갈 변수
 
 	int person_num = 0;	//정기권 이용자수
 	int data_num = 0;	//이용자당 입력할 데이터 수
@@ -118,7 +167,7 @@ bool OnedayDB::readFile()
 			getline(file, arrival_time, '\n');
 			getline(file, departure_time, '\n');
 
-			//노드에 구조체정보 저장
+			//노드에 클래스 정보 저장
 			AddNode(Oneday(phone_num, payment_date, expert_date, seat_num, arrival_time, departure_time));
 		}
 	}
@@ -133,8 +182,8 @@ void OnedayDB::signup(string phone_num, string payment_date, string expert_date,
 
 bool OnedayDB::writeFile()
 {
-	string path = "season.txt";
-	int person_num = 3;	//정기권 이용자수
+	string path = "oneday.txt";
+	int person_num = cntSize;	//정기권 이용자수
 	int data_num = 5;	//이용자당 입력할 데이터 수
 	string phone_num;	//전화번호
 	string payment_date;	//결제일시
@@ -145,35 +194,29 @@ bool OnedayDB::writeFile()
 
 	ofstream file;
 	file.open(path, ios::out);
-	current = start;
-	while (current != NULL)
+	Oneday* temp = start;
+	file << person_num << "\n";
+	file << data_num << "\n";
+	for (int i = 0; i < person_num; i++)
 	{
-		file << person_num;
-		file << data_num;
-		file << current->DB_phone_num;
-		file << current->DB_payment_date;
-		file << current->DB_expert_date;
-		file << current->DB_seat_num;
-		file << current->DB_arrival_time;
-		file << current->DB_departure_time;
-
-		current = current->next;
-
+		file << temp->DB_phone_num << "\n";
+		file << temp->DB_payment_date << "\n";
+		file << temp->DB_expert_date << "\n";
+		file << temp->DB_seat_num << "\n";
+		file << temp->DB_arrival_time << "\n";
+		file << temp->DB_departure_time << "\n";
+		temp = temp->next;
 	}
 	file.close();
-	return true;
-}
+	return true;}
 
-//int main()
-//{
-//	OnedayDB oneday;
-//	oneday.initList();
-//	oneday.readFile();
-//	bool tf;
-//	oneday.signup("01000000000", "결제일시", "만료", "자리", "입실", "퇴실");
-//	tf = oneday.searchSeasonDB("01000005000");
-//	if (tf)
-//		cout << "재입장 가능";
-//	else
-//		cout << "입장 불가";
-//}
+int main()
+{
+	OnedayDB oneday;
+	oneday.readFile();
+	//전화번호에 해당하는 필드 삭제 
+	oneday.deleteOneday("01012345888");
+	//파일에 쓰기
+	oneday.writeFile();
+
+}

@@ -1,4 +1,3 @@
-#include "SeasonDB.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -21,14 +20,7 @@ public:
 	Season(string num, string paydate, string expertdate, string seat, string arrivaltime, string departtime)
 		:DB_phone_num(num), DB_payment_date(paydate), DB_expert_date(expertdate), DB_seat_num(seat), DB_arrival_time(arrivaltime), DB_departure_time(departtime) {};
 };
-//typedef struct Node
-//{
-//	Season season;
-//	struct Node* pNext;
-//}Node;
-//
-//Node* pHead = NULL;
-//Node* pTail = NULL;
+
 class SeasonDB 
 {
 public:
@@ -100,9 +92,10 @@ bool SeasonDB::deleteSeason(string phonenum)
 	Season* swap;
 	int nodeIndex = 0;
 	//searchSeasonDB에서 전화번호로 탐색하여 인덱스값을 반환 받음
-	nodeIndex = searchSeasonDB(phonenum);
+	nodeIndex = searchSeasonDB(phonenum)-1;
+	cout << nodeIndex;
 	if (nodeIndex != 0) {
-		for (int i = 0; i < nodeIndex - 1; i++) 
+		for (int i = 0; i < nodeIndex-1; i++) 
 		{
 			temp = temp->next;
 		}
@@ -115,7 +108,7 @@ bool SeasonDB::deleteSeason(string phonenum)
 		del = temp;
 	}
 	delete del;
-	cntSize -= 1;
+	cntSize--;
 	return true;
 
 }
@@ -135,10 +128,11 @@ int SeasonDB::searchSeasonDB(string phonenum)
 	{
 		cout << "노드속 전화번호:" << current->DB_phone_num<<endl;
 		if (current->DB_phone_num == phonenum) {
-			return nodeIndex+1;
+			return nodeIndex;
 		}
 		else {
 			current = current->next;
+			nodeIndex++;
 		}
 	}
 	return 0;
@@ -192,7 +186,7 @@ void SeasonDB::signup(string phone_num, string payment_date, string expert_date,
 bool SeasonDB::writeFile() 
 {
 	string path = "season.txt";
-	int person_num = 3;	//정기권 이용자수
+	int person_num = cntSize;	//정기권 이용자수
 	int data_num = 5;	//이용자당 입력할 데이터 수
 	string phone_num;	//전화번호
 	string payment_date;	//결제일시
@@ -204,38 +198,36 @@ bool SeasonDB::writeFile()
 	ofstream file;
 	file.open(path, ios::out);
 	Season* temp = start;
-	while (temp != NULL) 
+	file << person_num << "\n";
+	file << data_num << "\n";
+	for (int i = 0; i < person_num ; i++) 
 	{
-		file << person_num<<"\n";
-		file << data_num << "\n";
 		file << temp->DB_phone_num << "\n";
 		file << temp->DB_payment_date << "\n";
 		file << temp->DB_expert_date << "\n";
 		file << temp->DB_seat_num << "\n";
 		file << temp->DB_arrival_time << "\n";
 		file << temp->DB_departure_time << "\n";
-
 		temp = temp->next;
-		
 	}
 	file.close();
 	return true;
 }
 
-int main() 
-{
-	SeasonDB season;
-	
-	season.readFile();
-	bool tf;
-
-	season.signup("01000000000","결제일시","만료","자리","입실","퇴실");
-	tf=season.searchSeasonDB("01000020000");
-	if (tf)
-		cout << "재입장 가능";
-	else
-		cout << "입장 불가";
-	season.deleteSeason("01037937506");
-	season.writeFile();
-
-}
+//int main() 
+//{
+//	SeasonDB season;
+//	
+//	season.readFile();
+//	bool tf;
+//
+//	season.signup("전화번호","결제일시","만료","자리","입실","퇴실");
+//	tf=season.searchSeasonDB("전화번호");
+//	if (tf)
+//		cout << "재입장 가능";
+//	else
+//		cout << "입장 불가";
+//	season.deleteSeason("01012345888");
+//	season.writeFile();
+//
+//}
