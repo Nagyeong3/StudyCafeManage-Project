@@ -44,7 +44,7 @@ void Account::writeDB()
 	}
 
 	string write = to_string(totalAccount);
-	file << write;
+	file << write<<"\n";
 
 	file.close();
 

@@ -57,8 +57,8 @@ void Time::writeData()
 
 	string D = to_string(Date);
 	string T = to_string(Time);
-	file << D;
-	file << T;
+	file << D << "\n";
+	file << T << "\n";
 
 	file.close();
 
