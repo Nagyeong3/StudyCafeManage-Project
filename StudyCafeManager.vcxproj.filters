@@ -18,12 +18,15 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SeasonTicket.cpp">
+    <ClCompile Include="SeasonDB.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="OnedayDB.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SeasonTicket.h">
+    <ClInclude Include="SeasonDB.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
