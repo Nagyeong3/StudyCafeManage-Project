@@ -23,12 +23,17 @@ struct Person{
 };
 class PersonDB{
 //Person 을 저장하는 PersonDB
-    public:
+    private:
     //startpoint는 공백!
         Person* startPoint;
         Person* currentPoint;
+        SeasonDB seasonDB;
+        OnedayDB onedayDB;
+        SeatDB seatDB;
+        static PersonDB personDB;
     
-    private:
+    public:
+        PersonDB(SeasonDB Season,OnedayDB Oneday,SeatDB Seat);
         //LinkedList 관리
         void initLinkedList();
         Person nextPerson();
@@ -58,8 +63,15 @@ class PersonDB{
         string inputSeat();
         string inputDate();
 };
+PersonDB::PersonDB(SeasonDB Season,OnedayDB Oneday,SeatDB Seat){
+    initLinkedList();
+    seasonDB=Season;
+    onedayDB=Oneday;
+    seatDB=Seat;
+}
 void PersonDB::initLinkedList(){
     //초기화
+    Person* startPoint=(Person*)malloc(sizeof(Person*));
     currentPoint=startPoint;
 };
 bool PersonDB::addPerson(Person target){
@@ -92,14 +104,21 @@ void PersonDB::showPersonInfo(string phonenum){
         string output;
         string currentTime;
         string leftTime;
-        // Seat seat=new Seat(rtn->Seat);
-        // output=seat.tostring(); 
-        //Time time;
-        //time.setTime();
-        //currentTime=time.getTime();
-        //leftTime=time.getleftTime(rtn->endDate);
+        string seatNum=rtn->Seat;
+        string output;
+        if(seatNum.compare("1")){
+            output="정기권(지정석)";
+        }else if(seatNum.compare("2")){
+            output="정기권(자유석)";
+        }else {
+            output="단일권";
+        }
+        Time time;
+        time.insertTime();
+        leftTime=time.leftTime(rtn->endDate);
         //2022-09-28 16:15:54 ] 구본무 고객님 / 단일권 2시간 34분 남았습니다.
-        cout<<currentTime<<"]"<<rtn->Name<<"고객님/"<<output<<" "<<leftTime<<"남았습니다."<<endl;
+        time.showTime();
+        cout<<"]"<<rtn->Name<<"고객님/"<<output<<" "<<leftTime<<"남았습니다."<<endl;
     }
 };
 bool PersonDB::deletePerson(string phonenum){
@@ -144,10 +163,15 @@ bool PersonDB::writeFile(){
         this->currentPoint=this->startPoint;
         while(currentPoint!=NULL){
             file<<currentPoint->PhoneNum;
+            file<<enter;
             file<<currentPoint->Name;
+            file<<enter;          
             file<<currentPoint->Seat;
+            file<<enter;
             file<<currentPoint->startDate;
+            file<<enter;
             file<<currentPoint->endDate;
+            file<<enter;
             currentPoint=currentPoint->next;
         }
         file.close();
@@ -162,8 +186,7 @@ bool PersonDB::signup(){
     string Name=inputName();
     string inseat=inputSeat();
     if(inseat.compare("1")){
-        Seat seat;
-        seat.chooseSeat();    
+        inseat=seatDB.chooseSeat();    
     }
     cout<<"결제로 이동합니다."<<endl;
     Account acc;
@@ -177,14 +200,15 @@ bool PersonDB::signup(){
         addrnt=this->addPerson(Person(PhoneNum,Name,inseat,currentTime,endTime));
     }while(addrnt==false);
     currentPoint=currentPoint->next;
+    seasonDB.signup(PhoneNum,currentTime,endTime,inseat);
     cout<<"회원가입이 완료되었습니다."<<endl;
 };
 bool PersonDB::signup(string PhoneNum){
     string Name=inputName();
     string inseat=inputSeat();
+    string seatNum;
     if(inseat.compare("1")){
-        Seat seat;
-        seat.chooseSeat();    
+        seatNum=seatDB.chooseSeat();    
     }
     cout<<"결제로 이동합니다."<<endl;
     Account acc;
@@ -198,6 +222,13 @@ bool PersonDB::signup(string PhoneNum){
         addrnt=this->addPerson(Person(PhoneNum,Name,inseat,currentTime,endTime));
     }while(addrnt==false);
     currentPoint=currentPoint->next;
+    if(inseat.compare("3")){
+        //단일권
+        onedayDB.signup(PhoneNum,currentTime,endTime,seatNum);    
+    }
+    else{
+        seasonDB.signup(PhoneNum,currentTime,endTime,seatNum);    
+    }
     cout<<"회원가입이 완료되었습니다."<<endl;
 };
 bool PersonDB::checkPhoneNum(string PhoneNum){

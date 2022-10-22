@@ -26,15 +26,25 @@ class PersonDB{
         bool writeFile();
         bool makeFile();       
 };
-class Time{
+class Time {
+    private:
+        int Date, Time;
+        int bY, bM, bD, bH, bmin;
+        int Y,M,D,H,min;
     public:
+        void readData(int D,int T);
+        void insertTime(); //시간입력함수
+        void cleanDB(); //정기권,단일권 정리
+        string leftTime(string finish); //남은시간 계산
+        void showTime(); //시간출력 함수
         bool setTime();
         string getTime();
         string toString();
         string getEndTime();
 
 };
-class Seat{
+
+class SeatDB{
 
     public:
         bool chooseSeat();
@@ -43,5 +53,12 @@ class Account{
     public:
         string payTicket(string ticket);
 };
-
+class SeasonDB{
+    public:
+        void signup(string PhoneNum,string startTime,string endTime,string seat);
+};
+class OnedayDB{
+    public:
+        void signup(string PhoneNum,string startTime,string endTime,string seat);
+};
 #endif
