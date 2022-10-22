@@ -152,4 +152,3 @@ string SeatDB::toChar(string seat)
 		return "??";
 	}
 }
-//
