@@ -4,6 +4,9 @@
         "xstring": "cpp",
         "string": "cpp",
         "iostream": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "ostream": "cpp",
+        "xutility": "cpp",
+        "writetest": "cpp"
     }
 }
