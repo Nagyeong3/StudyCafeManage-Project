@@ -41,7 +41,7 @@ bool SeatDB::writeFile()
 void SeatDB::showSeat()
 {
 	readFile();
-	cout << "[           좌석현황          ]" << endl;
+	cout << "\n[           좌석현황          ]" << endl;
 	cout << "   1  2  3  4  5  6  7  8  9 10" << endl;
 	for (int i = 0; i < SEAT_MAX; i++) {
 		if (i % 10 == 0) {
@@ -62,9 +62,9 @@ int SeatDB::chooseSeat(int memType)
 	readFile();
 	string chooseS;	// 사용자입력(ex: A3, C10)
 	do {
-		cout << "[           좌석선택          ]\n" << endl;
+		cout << "\n[           좌석선택          ]\n" << endl;
 		showSeat();
-		cout << "\n좌석을 선택하세요(ex: A3, C10) : ";
+		cout << "\n좌석을 선택하세요(ex: A3, C10)(빈 자리 => □) : ";
 		cin >> chooseS;
 	} while (!checkInput(chooseS));
 
@@ -75,7 +75,7 @@ int SeatDB::chooseSeat(int memType)
 
 }
 
-// 자리선택 input검사 함수
+// 좌석선택 input검사 함수
 int SeatDB::checkInput(string s)
 {
 	string s1, s2;	// ex: 입력받은 A3에서 A부분과 3부분
@@ -108,7 +108,7 @@ int SeatDB::checkInput(string s)
 	}
 }
 
-// 선택받은 자리수정
+// 선택받은 좌석수정
 bool SeatDB::fixSeat(int memType, int idx)
 {
 	string fixStr;
@@ -127,17 +127,26 @@ bool SeatDB::fixSeat(int memType, int idx)
 	return true;
 }
 
-// 0,1,2 숫자를 '□','■','▦'로 바꿔줌
+// 선택받은 좌석삭제
+bool SeatDB::delSeat(int idx)
+{
+	readFile();
+	seat[idx] = "0";
+	writeFile();
+	return true;
+}
+
+// 0,1,2 숫자를 '□','▦','■'로 바꿔줌
 string SeatDB::toChar(string seat)
 {
 	if (seat.compare("0") == 0) {
 		return "□";
 	}
 	else if (seat.compare("1") == 0) {
-		return "■";
+		return "▦";
 	}
 	else if (seat.compare("2") == 0) {
-		return "▦";
+		return "■";
 	}
 	else {
 		return "??";

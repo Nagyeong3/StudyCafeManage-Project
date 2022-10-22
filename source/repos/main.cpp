@@ -14,25 +14,30 @@ int main()
 
 	// 시간입력하기함수
 
-	int menu;
+	string menu;
 	do {
-		cout << "┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐" << endl;
-		cout << "│ [1] 회원출입 │ │ [2] 회원확인 │ │ [3] 회    계 │ │ [4] 자리확인 │" << endl;
-		cout << "└──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘" << endl;
+		cout << "┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌────────┐" << endl;
+		cout << "│ [1] 회원출입 │ │ [2] 회원확인 │ │ [3] 회    계 │ │ [4] 자리확인 │ │ 종료: Q│" << endl;
+		cout << "└──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘ └────────┘" << endl;
 		cin >> menu;
 
-		if (menu == 1) {		// 회원출입
+		if (menu.compare("1") == 0) {		// 회원출입
 			
 		}
-		else if (menu == 2) {	// 회원확인
+		else if (menu.compare("2") == 0) {	// 회원확인
 //			person.showPersonInfo();
 		}
-		else if (menu == 3) {	// 회계
+		else if (menu.compare("3") == 0) {	// 회계
 //			account.showAccount();
 		}
-		else if (menu == 4) {	// 자리확인
+		else if (menu.compare("4") == 0) {	// 자리확인
 			seat.showSeat();
 		}
-	} while (menu != 0);
+	} while (menu != "Q");
 
+}
+
+void enterMain() {
+//	bool exist = 전화번호 입력함수
+//	if(exist)
 }
