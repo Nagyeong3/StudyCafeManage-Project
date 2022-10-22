@@ -27,9 +27,21 @@ class PersonDB{
         bool makeFile();       
 };
 class Time{
-    
+    public:
+        bool setTime();
+        string getTime();
+        string toString();
+        string getEndTime();
+
 };
-class Seat;
-class Account;
+class Seat{
+
+    public:
+        bool chooseSeat();
+};
+class Account{
+    public:
+        string payTicket(string ticket);
+};
 
 #endif
