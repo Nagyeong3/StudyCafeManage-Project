@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 class Account {
 
@@ -6,10 +7,13 @@ class Account {
 public:
 
 	int totalAccount;
+	int Y, M, D, H, min;
 
 	void readDB();
 	void writeDB();
-	void payTicket(int price);  //결제
+	void showAccount();
+	string int2string(int I);
+	string payTicket(string seat);  //결제
 
 
 };
