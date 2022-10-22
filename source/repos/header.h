@@ -41,7 +41,7 @@ class Time {
         string getTime();
         string toString();
         string getEndTime();
-
+        bool checkTime(string inputTime);
 };
 
 class SeatDB{
