@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-repos",
+      "appliesTo": "source/repos/",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "task-StudyCafeManage-Project",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}
