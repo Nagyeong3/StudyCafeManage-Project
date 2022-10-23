@@ -14,7 +14,7 @@ public:
 	string DB_arrival_time;
 	string DB_departure_time;
 	
-	
+	 
 	Season() {};
 	Season(string num, string paydate, string expertdate, string seat, string arrivaltime, string departtime)
 		:DB_phone_num(num), DB_payment_date(paydate), DB_expert_date(expertdate), DB_seat_num(seat), DB_arrival_time(arrivaltime), DB_departure_time(departtime) {};

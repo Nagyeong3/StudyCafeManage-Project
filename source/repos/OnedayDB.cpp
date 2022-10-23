@@ -224,7 +224,7 @@ int main()
 	oneday.readFile();
 	//단일권 회원가입
 	oneday.signup("전화번호", "결제일시", "만료일시", "-1", "입실시간", "퇴실시간");
-	//전화번호에 해당하는 필드 삭제 
+	//전화번호에 해당하는 필드 삭제  
 	oneday.deleteOneday("01012345888");
 	//파일에 쓰기
 	oneday.writeFile();
