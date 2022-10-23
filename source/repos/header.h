@@ -30,6 +30,7 @@ class PersonDB{
         SeasonDB seasonDB;
         OnedayDB onedayDB;
         SeatDB seatDB;
+        Time time;
         PersonDB();
         PersonDB(SeasonDB Season,OnedayDB Oneday,SeatDB Seat);
         //LinkedList 관리

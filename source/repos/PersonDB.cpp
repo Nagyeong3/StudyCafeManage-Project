@@ -1,11 +1,12 @@
 #include "header.h"
 using namespace std;
 
-PersonDB::PersonDB(SeasonDB Season,OnedayDB Oneday,SeatDB Seat){
+PersonDB::PersonDB(SeasonDB Season,OnedayDB Oneday,SeatDB Seat,Time time){
     initLinkedList();
     seasonDB=Season;
     onedayDB=Oneday;
     seatDB=Seat;
+    time=time;
 }
 void PersonDB::initLinkedList(){
     //초기화
@@ -75,8 +76,6 @@ void PersonDB::showPersonInfo(string phonenum){
         }else {
             output="단일권";
         }
-        Time time;
-        time.insertTime();
         leftTime=time.leftTime(seatNum,rtn->endDate);
         //2022-09-28 16:15:54 ] 구본무 고객님 / 단일권 2시간 34분 남았습니다.
         time.showTime();
