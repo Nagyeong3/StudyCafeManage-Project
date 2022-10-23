@@ -1,5 +1,12 @@
 {
     "files.associations": {
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "xstring": "cpp",
+        "string": "cpp",
+        "iostream": "cpp",
+        "ios": "cpp",
+        "ostream": "cpp",
+        "xutility": "cpp",
+        "writetest": "cpp"
     }
 }
