@@ -9,6 +9,7 @@
         "xutility": "cpp",
         "writetest": "cpp",
         "xiosbase": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "iosfwd": "cpp"
     }
 }

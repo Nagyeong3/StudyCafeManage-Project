@@ -1,23 +1,16 @@
 #include "header.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-
-using namespace std;
-
 void Account::readDB()
 {
 	ifstream file;
 	file.open("account.txt");
 
-	if (!file) { //����ó��
-		cout << "account open ����\n";
+	if (!file) { //오류처리
+		cout << "account open 오류\n";
 		exit(100);
 	}
 
 
-	//���� �ҷ�����
+	//가격 불러오기
 
 	string read;
 	file.seekg(0);
@@ -37,8 +30,8 @@ void Account::writeDB()
 	ofstream file;
 	file.open("account.txt", ios::app);
 
-	if (!file) { //����ó��
-		cout << "account open ����\n";
+	if (!file) { //오류처리
+		cout << "account open 오류\n";
 		exit(100);
 	}
 
@@ -71,16 +64,16 @@ string Account::payTicket(string seat)
 	stringstream ssInt(seat);
 	ssInt >> num;
 
-	//��¥�Է�
+	//날짜입력
 	int Date, Time;
-	cout << "\n��¥�� �Է����ּ��� (2022��07��21�� -> 20220721) : ";
+	cout << "\n날짜를 입력해주세요 (2022년07월21일 -> 20220721) : ";
 	cin >> Date;
 
 	Y = Date / 10000;
 	M = (Date % 10000) / 100;
 	D = (Date % 10000) % 100;
 
-	cout << "�ð��� �Է����ּ��� (16��34�� -> 1634)";
+	cout << "시간을 입력해주세요 (16시34분 -> 1634)";
 	cin >> Time;
 
 	H = Time / 100;
@@ -88,14 +81,14 @@ string Account::payTicket(string seat)
 
 
 
-	//���������Է�
+	//결제정보입력
 
-	if (num == 1 || num==2) {  //�����
+	if (num == 1 || num==2) {  //정기권
 		int choice;
-		cout << "1) 7�� ------- 70��\n";
-		cout << "2) 14�� ------- 140��\n";
-		cout << "3) 28�� ------- 280��\n";
-		cout << "�̿��Ͻ� �̿���� �������ּ��� : ";
+		cout << "1) 7일 ------- 70원\n";
+		cout << "2) 14일 ------- 140원\n";
+		cout << "3) 28일 ------- 280원\n";
+		cout << "이용하실 이용권을 선택해주세요 : ";
 		cin >> choice;
 
 		if (choice == 1) { 
@@ -122,12 +115,12 @@ string Account::payTicket(string seat)
 		}
 		
 
-	}else if (num == 3) {  //���ϱ�
+	}else if (num == 3) {  //단일권
 		int choice;
-		cout << "1) 8�ð� ------- 8��\n";
-		cout << "2) 16�ð� ------- 16��\n";
-		cout << "3) 24�ð� ------- 24��\n";
-		cout << "�̿��Ͻ� �̿���� �������ּ��� : ";
+		cout << "1) 8시간 ------- 8원\n";
+		cout << "2) 16시간 ------- 16원\n";
+		cout << "3) 24시간 ------- 24원\n";
+		cout << "이용하실 이용권을 선택해주세요 : ";
 		cin >> choice;
 
 		if (choice == 1) { 
@@ -145,10 +138,9 @@ string Account::payTicket(string seat)
 	}
 
 	
-	cout << price << "���� �����Ǿ����ϴ�.\n";
+	cout << price << "원이 결제되었습니다.\n";
 	totalAccount += price;
 
 	
-	//�� �� �� ������ �ð� ��ġ��
+	//이 함 수 끝나고 시간 고치기
 }
-
