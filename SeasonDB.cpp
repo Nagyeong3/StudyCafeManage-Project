@@ -3,7 +3,6 @@
 #include <string>
 
 using namespace std;
-
 class Season
 {
 public:
@@ -122,12 +121,21 @@ int SeasonDB::searchSeasonDB(string phonenum)
 {
 	int nodeIndex=1;
 	Season* current = start;
+	int int_seatnum = 100;
+	string string_seatnum;
+	//SeatDB seat;
 	cout << "searchSeasonDB::" << endl;
 	cout << "찾을 전화번호:" << phonenum<<endl;
 	while (current !=NULL) 
 	{
 		cout << "노드속 전화번호:" << current->DB_phone_num<<endl;
 		if (current->DB_phone_num == phonenum) {
+			//자리 -1이면 자유석임 -> 자리선택해줘 ->  db에 넣기
+			if (current->DB_seat_num == "-1") {
+				cout << "자리를 선택해주세요\n찬양 함수 호출해서 자리번호100번으로 배정받았다고 침\n";
+				//int_seatnum=seat.chooseSeat();
+				current->DB_seat_num = to_string(int_seatnum);
+			}
 			return nodeIndex;
 		}
 		else {
@@ -135,6 +143,7 @@ int SeasonDB::searchSeasonDB(string phonenum)
 			nodeIndex++;
 		}
 	}
+
 	return 0;
 }
 
@@ -221,13 +230,19 @@ bool SeasonDB::writeFile()
 //	season.readFile();
 //	bool tf;
 //
-//	season.signup("전화번호","결제일시","만료","자리","입실","퇴실");
+//	season.signup("전화번호","결제일시","만료일시","-1","입실시간","퇴실시간");
+//	//재입장 관련
 //	tf=season.searchSeasonDB("전화번호");
 //	if (tf)
-//		cout << "재입장 가능";
+//
+//		cout << "재입장 가능\n";
 //	else
-//		cout << "입장 불가";
-//	season.deleteSeason("01012345888");
+//		cout << "입장 불가\n";
+//	//퇴실 관련
+//	tf = season.searchSeasonDB("01037937506");
+//	season.deleteSeason("01037937506");
+//
+//	//season.deleteSeason("01012345888");
 //	season.writeFile();
 //
 //}

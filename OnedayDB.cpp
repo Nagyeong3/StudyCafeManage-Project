@@ -30,11 +30,12 @@ public:
 	bool writeFile();	//oneday.txt 쓰는 함수
 	//회원가입
 	void signup(string phone_num, string payment_date, string expert_date, string seat_num, string arrival_date, string depart_date);
-
-	void AddNode(Oneday _oneday);	//노드를 연결리스트에 추가하는 함수
+	//노드를 연결리스트에 추가하는 함수
+	void AddNode(Oneday _oneday);	
 	void printData();
+	//DB 삭제할 때 몇번째 노드인지 확인용 함수 
+	int searchOnedayDB(string phonenum);
 	bool deleteOneday(string phonenum);
-	int searchOnedayDB(string phonenum);	//전번 있으면 노드인덱스+1 반환
 private:
 	int cntSize = 0;
 };
@@ -78,6 +79,12 @@ void OnedayDB::printData()
 	cout << "printData:\n";
 	for (int i = 0; i < cntSize; i++)
 	{
+		cout << temp->DB_phone_num << endl;
+		cout << temp->DB_seat_num << endl;
+		cout << temp->DB_arrival_time << endl;
+		cout << temp->DB_departure_time << endl;
+		cout << temp->DB_expert_date<< endl;
+		cout << temp->DB_payment_date << endl;
 		cout << temp->DB_seat_num << endl;
 		temp = temp->next;
 	}
@@ -208,12 +215,15 @@ bool OnedayDB::writeFile()
 		temp = temp->next;
 	}
 	file.close();
-	return true;}
+	return true;
+}
 
 int main()
 {
 	OnedayDB oneday;
 	oneday.readFile();
+	//단일권 회원가입
+	oneday.signup("전화번호", "결제일시", "만료일시", "-1", "입실시간", "퇴실시간");
 	//전화번호에 해당하는 필드 삭제 
 	oneday.deleteOneday("01012345888");
 	//파일에 쓰기
