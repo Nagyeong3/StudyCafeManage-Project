@@ -8,82 +8,23 @@ using namespace std;
 #define _HEADER_H
 #define SEAT_MAX 30
 
-class Person{
-//PersonDB 내의 각 객체 Person
-    public:
-        string PhoneNum;
-        string Name;
-        string Seat;
-        string startDate;
-        string endDate; 
-        Person* next;
-        Person(string num,string name ,string seat,string startdate,string enddate):PhoneNum(num),Name(name),Seat(seat),startDate(startdate),endDate(enddate){
-            next=NULL;
-        };
-        Person(){
-            Seat="0";
-            next=NULL;
-        };
-};
-class PersonDB{
-//Person 을 저장하는 PersonDB
-    public:    
-    //startpoint는 공백!
-        Person* startPoint=new Person();
-        int size;
-        SeasonDB seasonDB;
-        OnedayDB onedayDB;
-        SeatDB seatDB;
-        Time time;
-        PersonDB();
-        PersonDB(SeasonDB Season,OnedayDB Oneday,SeatDB Seat,Time time);
-        //LinkedList 관리
-        void initLinkedList();
-        Person nextPerson();
-        bool addPerson(Person target);
-        bool deletePerson(string PhoneNum); 
-        Person* searchPerson(string PhoneNum);
-        void showPersonInfo(string PhoneNum);
-        
-        //File I/O
-        bool readFile();
-        bool writeFile();
 
-        //회원가입
-        bool signup();
-        bool signup(string PhoneNum);
-
-        //검증
-        bool checkPhoneNum(string PhoneNum);
-        bool checkName(string Name);
-        bool checkSeat(string Seat);
-        bool checkDate(string Date);
-
-        //입력
-        string inputPhoneNum();
-        string inputName();
-        string inputSeat();
-        string inputDate();
-};
 class Time {
-    private:
+    public:
+
         int Date, Time;
         int bY, bM, bD, bH, bmin;
         int Y,M,D,H,min;
-    public:
+
         void readData();
+        void writeData();
         void insertTime(); //시간입력함수
         void cleanDB(); //정기권,단일권 정리
-        string leftTime(string seatnum,string finish); //남은시간 계산
+        string int2string(int I); 
+        string leftTime(string num, string finish); //남은시간 계산
         void showTime(); //시간출력 함수
-        bool setTime();
-        string getTime();
-        string toString();
-        string getEndTime();
-        bool checkTime(string inputTime);
-        void writeData();
+        string returnTime(); // 현재시간 반환
 };
-
 class SeatDB {
 private:
 	string seat[SEAT_MAX];
@@ -180,6 +121,68 @@ class SeasonDB
     private:
         int cntSize = 0;
 };
+class Person{
+//PersonDB 내의 각 객체 Person
+    public:
+        string PhoneNum;
+        string Name;
+        string Seat;
+        string startDate;
+        string endDate; 
+        Person* next;
+        Person(string num,string name ,string seat,string startdate,string enddate):PhoneNum(num),Name(name),Seat(seat),startDate(startdate),endDate(enddate){
+            next=NULL;
+        };
+        Person(){
+            Seat="0";
+            next=NULL;
+        };
+};
+class PersonDB{
+//Person 을 저장하는 PersonDB
+    public:    
+    //startpoint는 공백!
+        Person* startPoint=new Person();
+        int size;
+        SeasonDB seasonDB;
+        OnedayDB onedayDB;
+        SeatDB seatDB;
+        Time time;
+        PersonDB();
+        PersonDB(SeasonDB Season,OnedayDB Oneday,SeatDB Seat,Time time);
+        //LinkedList 관리
+        void initLinkedList();
+        Person nextPerson();
+        bool addPerson(Person target);
+        bool deletePerson(string PhoneNum);
+        Person* searchPerson(string PhoneNum);
+        void showPersonInfo(string PhoneNum); 
+        //만료고객 삭제
+            // 자정 지나고 단일권 삭제
+        bool deleteOneday(string time);
+            //만료시간 지난 사람 삭제
+        bool deleteEndPerson(string time);
+        
+        
+        //File I/O
+        bool readFile();
+        bool writeFile();
 
+        //회원가입
+        bool signup();
+        bool signup(string PhoneNum);
+
+        //검증
+        bool checkPhoneNum(string PhoneNum);
+        bool checkName(string Name);
+        bool checkSeat(string Seat);
+        bool checkDate(string Date);
+
+        //입력
+        string inputPhoneNum();
+        string inputName();
+        string inputSeat();
+        string inputDate();
+};
 
 #endif

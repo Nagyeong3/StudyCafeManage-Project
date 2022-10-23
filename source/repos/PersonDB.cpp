@@ -59,6 +59,36 @@ Person* PersonDB::searchPerson(string phonenum){
     }
     return NULL;
 };
+bool PersonDB::deleteOneday(string time){
+    //자정이 지난 단일권 고객 삭제
+    Person* current=startPoint;
+    // while(currentIndex!=size){
+    while(current!=nullptr){
+        if(current->Seat.compare("3")){
+            deletePerson(current->PhoneNum);
+            return true;
+        }
+        else {
+            current=current->next;
+        }
+    }
+    return false;
+};
+bool PersonDB::deleteEndPerson(string time){
+    Person* current=startPoint;
+    // while(currentIndex!=size){
+    while(current!=nullptr){
+        if(stod(current->endDate)<stod(time)){
+            deletePerson(current->PhoneNum);
+            return true;
+        }
+        else {
+            current=current->next;
+        }
+    }
+    return false;
+};
+
 void PersonDB::showPersonInfo(string phonenum){
     Person* rtn=searchPerson(phonenum);
     if(rtn==NULL){
@@ -80,7 +110,7 @@ void PersonDB::showPersonInfo(string phonenum){
         leftTime=time.leftTime(seatNum,rtn->endDate);
         //2022-09-28 16:15:54 ] 구본무 고객님 / 단일권 2시간 34분 남았습니다.
         time.showTime();
-        cout<<"]"<<rtn->Name<<"고객님/"<<output<<" "<<leftTime<<"남았습니다."<<endl;
+        cout<<"]"<<rtn->Name<<"고객님/"<<output<<" "<<leftTime<<" 남았습니다."<<endl;
     }
 };
 bool PersonDB::deletePerson(string Phonenum){
@@ -176,9 +206,7 @@ bool PersonDB::signup(){
     cout<<"결제로 이동합니다."<<endl;
     Account acc;
     string endTime=acc.payTicket(inseat);
-    Time temp;
-    temp.setTime();
-    string currentTime=temp.toString();
+    string currentTime=time.returnTime();
     cout<<"저장중...."<<endl;
     bool addrnt;
     do{
@@ -207,8 +235,7 @@ bool PersonDB::signup(string PhoneNum){
     Account acc;
     string endTime=acc.payTicket(inseat);
     Time temp;
-    temp.setTime();
-    string currentTime=temp.toString();
+    string currentTime=time.returnTime();
     cout<<"저장중...."<<endl;
     bool addrnt;
     do{
