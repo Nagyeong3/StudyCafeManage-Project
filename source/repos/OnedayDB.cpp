@@ -1,46 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-
-using namespace std;
-
-class Oneday
-{
-public:
-	Oneday* next = nullptr;
-	string DB_phone_num;
-	string DB_payment_date;
-	string DB_expert_date;
-	string DB_seat_num;
-	string DB_arrival_time;
-	string DB_departure_time;
-
-
-	Oneday() {};
-	Oneday(string num, string paydate, string expertdate, string seat, string arrivaltime, string departtime)
-		:DB_phone_num(num), DB_payment_date(paydate), DB_expert_date(expertdate), DB_seat_num(seat), DB_arrival_time(arrivaltime), DB_departure_time(departtime) {};
-};
-
-class OnedayDB
-{
-public:
-	Oneday* start = new Oneday();	//½ÃÀÛ³ëµå
-
-	bool readFile();	//oneday.txt ÀĞ´Â ÇÔ¼ö
-	bool writeFile();	//oneday.txt ¾²´Â ÇÔ¼ö
-	//È¸¿ø°¡ÀÔ
-	void signup(string phone_num, string payment_date, string expert_date, string seat_num, string arrival_date, string depart_date);
-	//³ëµå¸¦ ¿¬°á¸®½ºÆ®¿¡ Ãß°¡ÇÏ´Â ÇÔ¼ö
-	void AddNode(Oneday _oneday);
-	void printData();
-	//DB »èÁ¦ÇÒ ¶§ ¸î¹øÂ° ³ëµåÀÎÁö È®ÀÎ¿ë ÇÔ¼ö 
-	int searchOnedayDB(string phonenum);
-	bool deleteOneday(string phonenum);
-private:
-	int cntSize = 0;
-};
-
-//³ëµå¸¦ ¿¬°á¸®½ºÆ®¿¡ Ãß°¡ÇÏ´Â ÇÔ¼ö
+#include "header.h"
 void OnedayDB::AddNode(Oneday _oneday)
 {
 
@@ -89,14 +47,14 @@ void OnedayDB::printData()
 		temp = temp->next;
 	}
 }
-//³ëµå »èÁ¦ ÇÔ¼ö
+//ë…¸ë“œ ì‚­ì œ í•¨ìˆ˜
 bool OnedayDB::deleteOneday(string phonenum)
 {
 	Oneday* temp = start;
 	Oneday* del;
 	Oneday* swap;
 	int nodeIndex = 0;
-	//searchOnedayDB¿¡¼­ ÀüÈ­¹øÈ£·Î Å½»öÇÏ¿© ÀÎµ¦½º°ªÀ» ¹İÈ¯ ¹ŞÀ½
+	//searchOnedayDBì—ì„œ ì „í™”ë²ˆí˜¸ë¡œ íƒìƒ‰í•˜ì—¬ ì¸ë±ìŠ¤ê°’ì„ ë°˜í™˜ ë°›ìŒ
 	nodeIndex = searchOnedayDB(phonenum) - 1;
 	cout << nodeIndex;
 	if (nodeIndex != 0) {
@@ -126,10 +84,10 @@ int OnedayDB::searchOnedayDB(string phonenum)
 	int nodeIndex = 1;
 	Oneday* current = start;
 	cout << "searchOnedayDB::" << endl;
-	cout << "Ã£À» ÀüÈ­¹øÈ£:" << phonenum << endl;
+	cout << "ì°¾ì„ ì „í™”ë²ˆí˜¸:" << phonenum << endl;
 	while (current != NULL)
 	{
-		cout << "³ëµå¼Ó ÀüÈ­¹øÈ£:" << current->DB_phone_num << endl;
+		cout << "ë…¸ë“œì† ì „í™”ë²ˆí˜¸:" << current->DB_phone_num << endl;
 		if (current->DB_phone_num == phonenum) {
 			return nodeIndex;
 		}
@@ -138,7 +96,7 @@ int OnedayDB::searchOnedayDB(string phonenum)
 			nodeIndex++;
 		}
 	}
-	cout << "ÀÏÄ¡ÇÏ´Â È¸¿øÁ¤º¸°¡ ¾ø½À´Ï´Ù.\n";
+	cout << "ì¼ì¹˜í•˜ëŠ” íšŒì›ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.\n";
 	return 0;
 }
 
@@ -147,21 +105,21 @@ bool OnedayDB::readFile()
 {
 	string path = "oneday.txt";
 	ifstream file(path);
-	Oneday oneday;	//Seaon ±¸Á¶Ã¼¿¡ ´ã¾Æ°¥ º¯¼ö
+	Oneday oneday;	//Seaon êµ¬ì¡°ì²´ì— ë‹´ì•„ê°ˆ ë³€ìˆ˜
 
-	int person_num = 0;	//Á¤±â±Ç ÀÌ¿ëÀÚ¼ö
-	int data_num = 0;	//ÀÌ¿ëÀÚ´ç ÀÔ·ÂÇÒ µ¥ÀÌÅÍ ¼ö
-	string phone_num;	//ÀüÈ­¹øÈ£
-	string payment_date;	//°áÁ¦ÀÏ½Ã
-	string expert_date;	//¸¸·áÀÏ½Ã
-	string seat_num;	//ÀÚ¸®¹øÈ£
-	string arrival_time;	//ÀÔ½Ç½Ã°£
-	string departure_time;	//Åğ½Ç½Ã°£
-	string null_remove;	//°ø¹éÁ¦°Å
+	int person_num = 0;	//ì •ê¸°ê¶Œ ì´ìš©ììˆ˜
+	int data_num = 0;	//ì´ìš©ìë‹¹ ì…ë ¥í•  ë°ì´í„° ìˆ˜
+	string phone_num;	//ì „í™”ë²ˆí˜¸
+	string payment_date;	//ê²°ì œì¼ì‹œ
+	string expert_date;	//ë§Œë£Œì¼ì‹œ
+	string seat_num;	//ìë¦¬ë²ˆí˜¸
+	string arrival_time;	//ì…ì‹¤ì‹œê°„
+	string departure_time;	//í‡´ì‹¤ì‹œê°„
+	string null_remove;	//ê³µë°±ì œê±°
 
 	if (file.is_open())
 	{
-		cout << "ÆÄÀÏ Ãâ·Â È®ÀÎ\n";
+		cout << "íŒŒì¼ ì¶œë ¥ í™•ì¸\n";
 		file >> person_num;
 		file >> data_num;
 		//cout << person_num << data_num<<endl;
@@ -174,7 +132,7 @@ bool OnedayDB::readFile()
 			getline(file, arrival_time, '\n');
 			getline(file, departure_time, '\n');
 
-			//³ëµå¿¡ Å¬·¡½º Á¤º¸ ÀúÀå
+			//ë…¸ë“œì— í´ë˜ìŠ¤ ì •ë³´ ì €ì¥
 			AddNode(Oneday(phone_num, payment_date, expert_date, seat_num, arrival_time, departure_time));
 		}
 	}
@@ -190,14 +148,14 @@ void OnedayDB::signup(string phone_num, string payment_date, string expert_date,
 bool OnedayDB::writeFile()
 {
 	string path = "oneday.txt";
-	int person_num = cntSize;	//Á¤±â±Ç ÀÌ¿ëÀÚ¼ö
-	int data_num = 5;	//ÀÌ¿ëÀÚ´ç ÀÔ·ÂÇÒ µ¥ÀÌÅÍ ¼ö
-	string phone_num;	//ÀüÈ­¹øÈ£
-	string payment_date;	//°áÁ¦ÀÏ½Ã
-	string expert_date;	//¸¸·áÀÏ½Ã
-	string seat_num;	//ÀÚ¸®¹øÈ£
-	string arrival_time;	//ÀÔ½Ç½Ã°£
-	string departure_time;	//Åğ½Ç½Ã°£
+	int person_num = cntSize;	//ì •ê¸°ê¶Œ ì´ìš©ììˆ˜
+	int data_num = 5;	//ì´ìš©ìë‹¹ ì…ë ¥í•  ë°ì´í„° ìˆ˜
+	string phone_num;	//ì „í™”ë²ˆí˜¸
+	string payment_date;	//ê²°ì œì¼ì‹œ
+	string expert_date;	//ë§Œë£Œì¼ì‹œ
+	string seat_num;	//ìë¦¬ë²ˆí˜¸
+	string arrival_time;	//ì…ì‹¤ì‹œê°„
+	string departure_time;	//í‡´ì‹¤ì‹œê°„
 
 	ofstream file;
 	file.open(path, ios::out);
@@ -222,11 +180,11 @@ int main()
 {
 	OnedayDB oneday;
 	oneday.readFile();
-	//´ÜÀÏ±Ç È¸¿ø°¡ÀÔ
-	oneday.signup("ÀüÈ­¹øÈ£1", "°áÁ¦ÀÏ½Ã1", "¸¸·áÀÏ½Ã", "-1", "ÀÔ½Ç½Ã°£", "Åğ½Ç½Ã°£");
-	//ÀüÈ­¹øÈ£¿¡ ÇØ´çÇÏ´Â ÇÊµå »èÁ¦ 
+	//ë‹¨ì¼ê¶Œ íšŒì›ê°€ì…
+	oneday.signup("ì „í™”ë²ˆí˜¸1", "ê²°ì œì¼ì‹œ1", "ë§Œë£Œì¼ì‹œ", "-1", "ì…ì‹¤ì‹œê°„", "í‡´ì‹¤ì‹œê°„");
+	//ì „í™”ë²ˆí˜¸ì— í•´ë‹¹í•˜ëŠ” í•„ë“œ ì‚­ì œ 
 	oneday.deleteOneday("01012345888");
-	//ÆÄÀÏ¿¡ ¾²±â
+	//íŒŒì¼ì— ì“°ê¸°
 	oneday.writeFile();
 
 }

@@ -1,18 +1,12 @@
-#include "Time.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-
-using namespace std;
+#include "header.h"
 
 void Time::readData()
 {
 	ifstream file;
 	file.open("account.txt");
 
-	if (!file) { //ø¿∑˘√≥∏Æ
-		cout << "AccountDB open ø¿∑˘\n";
+	if (!file) { //Ïò§Î•òÏ≤òÎ¶¨
+		cout << "AccountDB open Ïò§Î•ò\n";
 		exit(100);
 	}
 
@@ -20,15 +14,15 @@ void Time::readData()
 	string read;
 	file.seekg(0);
 
-	getline(file, read); // »∏∞Ë æ≤∑Á
-	//Date¿–±‚
+	getline(file, read); // ÌöåÍ≥Ñ Ïì∞Î£®
+	//DateÏùΩÍ∏∞
 	getline(file, read);
 
 	int D;
 	stringstream ssInt(read);
 	ssInt >> D;
 
-	//Time¿–±‚
+	//TimeÏùΩÍ∏∞
 	getline(file, read);
 
 	int T;
@@ -50,8 +44,8 @@ void Time::writeData()
 	ofstream file;
 	file.open("account.txt", ios::app);
 
-	if (!file) { //ø¿∑˘√≥∏Æ
-		cout << "account open ø¿∑˘\n";
+	if (!file) { //Ïò§Î•òÏ≤òÎ¶¨
+		cout << "account open Ïò§Î•ò\n";
 		exit(100);
 	}
 
@@ -65,12 +59,12 @@ void Time::writeData()
 	return;
 }
 
-void Time::insertTime()//Ω√∞£¿‘∑¬«‘ºˆ
+void Time::insertTime()//ÏãúÍ∞ÑÏûÖÎ†•Ìï®Ïàò
 {
-	// ¿Ã¿¸Ω√∞£ ±‚∑œ
-	cout << "¿Ã¿¸Ω√∞£¿∫";
+	// Ïù¥Ï†ÑÏãúÍ∞Ñ Í∏∞Î°ù
+	cout << "Ïù¥Ï†ÑÏãúÍ∞ÑÏùÄ";
 	showTime();
-	cout << "¿‘¥œ¥Ÿ.";
+	cout << "ÏûÖÎãàÎã§.";
 	bY = Y;
 	bM = M;
 	bD = D;
@@ -78,14 +72,14 @@ void Time::insertTime()//Ω√∞£¿‘∑¬«‘ºˆ
 	bmin = min;
 	
 
-	cout << "≥Ø¬•∏¶ ¿‘∑¬«ÿ¡÷ººø‰ (2022≥‚07ø˘21¿œ -> 20220721) : ";
+	cout << "ÎÇ†ÏßúÎ•º ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî (2022ÎÖÑ07Ïõî21Ïùº -> 20220721) : ";
 	cin >> Date;
 
 	Y = Date / 10000;
 	M = (Date % 10000) / 100;
 	D = (Date % 10000) % 100;
 
-	cout << "Ω√∞£¿ª ¿‘∑¬«ÿ¡÷ººø‰ (16Ω√34∫– -> 1634)";
+	cout << "ÏãúÍ∞ÑÏùÑ ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî (16Ïãú34Î∂Ñ -> 1634)";
 	cin >> Time;
 
 	H = Time / 100;
@@ -95,17 +89,17 @@ void Time::insertTime()//Ω√∞£¿‘∑¬«‘ºˆ
 
 void Time::cleanDB()
 {
-	//¡§±‚±«
+	//Ï†ïÍ∏∞Í∂å
 
-	//¥‹¿œ±«
+	//Îã®ÏùºÍ∂å
 
 }
 
 string Time::leftTime(string num, string finish)
 {
-	int lY, lM, lD, lH, lmin;  //≥°≥≠Ω√∞£
+	int lY, lM, lD, lH, lmin;  //ÎÅùÎÇúÏãúÍ∞Ñ
 
-	//int∑Œ∫Ø∞Ê
+	//intÎ°úÎ≥ÄÍ≤Ω
 	int finshT;
 	stringstream ssInt(finish);
 	ssInt >> finshT;
@@ -129,14 +123,14 @@ string Time::leftTime(string num, string finish)
 		lH = c / 60;
 		lmin = c % 60;
 
-		return to_string(lH) + "Ω√∞£" + to_string(lmin) + "∫–";
+		return to_string(lH) + "ÏãúÍ∞Ñ" + to_string(lmin) + "Î∂Ñ";
 	}
-	else { //¡§±‚±«
+	else { //Ï†ïÍ∏∞Í∂å
 		if (lM != M) {
-			return to_string((30 - D) + lD)+"¿œ";
+			return to_string((30 - D) + lD)+"Ïùº";
 		}
 		else {
-			return to_string(lD - D) + "¿œ";
+			return to_string(lD - D) + "Ïùº";
 		}
 	}
 
@@ -147,7 +141,7 @@ string Time::leftTime(string num, string finish)
 
 void Time::showTime()
 {
-	cout << Y << "≥‚" << M / 100 << "ø˘" << D % 100 
-		<< "¿œ\t"<<H<<"Ω√"<< min<<"∫–";
+	cout << Y << "ÎÖÑ" << M / 100 << "Ïõî" << D % 100 
+		<< "Ïùº\t"<<H<<"Ïãú"<< min<<"Î∂Ñ";
 
 }

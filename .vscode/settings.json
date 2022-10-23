@@ -8,6 +8,7 @@
         "ostream": "cpp",
         "xutility": "cpp",
         "writetest": "cpp",
-        "xiosbase": "cpp"
+        "xiosbase": "cpp",
+        "sstream": "cpp"
     }
 }

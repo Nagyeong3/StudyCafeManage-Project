@@ -1,46 +1,6 @@
-#include <iostream>
-#include <fstream>
-#include <string>
+#include "header.h"
 
-using namespace std;
-class Season
-{
-public:
-	Season* next = nullptr;
-	string DB_phone_num;
-	string DB_payment_date;
-	string DB_expert_date;
-	string DB_seat_num;
-	string DB_arrival_time;
-	string DB_departure_time;
-
-
-	Season() {};
-	Season(string num, string paydate, string expertdate, string seat, string arrivaltime, string departtime)
-		:DB_phone_num(num), DB_payment_date(paydate), DB_expert_date(expertdate), DB_seat_num(seat), DB_arrival_time(arrivaltime), DB_departure_time(departtime) {};
-};
-
-class SeasonDB
-{
-public:
-	Season* start = new Season();
-	//Season* current = new Season();
-
-	bool readFile();
-	bool writeFile();
-	//È¸¿ø°¡ÀÔ
-	void signup(string phone_num, string payment_date, string expert_date, string seat_num, string arrival_date, string depart_date);
-
-	void AddNode(Season _Season);	//³ëµå¸¦ ¿¬°á¸®½ºÆ®¿¡ Ãß°¡ÇÏ´Â ÇÔ¼ö
-	void printData();
-	bool deleteSeason(string phonenum);
-	void ReEntrance();
-	int searchSeasonDB(string phonenum);	//Àü¹ø ÀÖÀ¸¸é true
-private:
-	int cntSize = 0;
-};
-
-//³ëµå¸¦ ¿¬°á¸®½ºÆ®¿¡ Ãß°¡ÇÏ´Â ÇÔ¼ö
+//ë…¸ë“œë¥¼ ì—°ê²°ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€í•˜ëŠ” í•¨ìˆ˜
 void SeasonDB::AddNode(Season _season)
 {
 
@@ -83,14 +43,14 @@ void SeasonDB::printData()
 		temp = temp->next;
 	}
 }
-//³ëµå »èÁ¦ ÇÔ¼ö
+//ë…¸ë“œ ì‚­ì œ í•¨ìˆ˜
 bool SeasonDB::deleteSeason(string phonenum)
 {
 	Season* temp = start;
 	Season* del;
 	Season* swap;
 	int nodeIndex = 0;
-	//searchSeasonDB¿¡¼­ ÀüÈ­¹øÈ£·Î Å½»öÇÏ¿© ÀÎµ¦½º°ªÀ» ¹İÈ¯ ¹ŞÀ½
+	//searchSeasonDBì—ì„œ ì „í™”ë²ˆí˜¸ë¡œ íƒìƒ‰í•˜ì—¬ ì¸ë±ìŠ¤ê°’ì„ ë°˜í™˜ ë°›ìŒ
 	nodeIndex = searchSeasonDB(phonenum) - 1;
 	cout << nodeIndex;
 	if (nodeIndex != 0) {
@@ -114,7 +74,7 @@ bool SeasonDB::deleteSeason(string phonenum)
 
 void SeasonDB::ReEntrance()
 {
-	cout << " Á¤±â±Ç °í°´ ÀçÀÔÀåÇÏ¿´½À´Ï´Ù\n";
+	cout << " ì •ê¸°ê¶Œ ê³ ê° ì¬ì…ì¥í•˜ì˜€ìŠµë‹ˆë‹¤\n";
 }
 
 int SeasonDB::searchSeasonDB(string phonenum)
@@ -125,14 +85,14 @@ int SeasonDB::searchSeasonDB(string phonenum)
 	string string_seatnum;
 	//SeatDB seat;
 	cout << "searchSeasonDB::" << endl;
-	cout << "Ã£À» ÀüÈ­¹øÈ£:" << phonenum << endl;
+	cout << "ì°¾ì„ ì „í™”ë²ˆí˜¸:" << phonenum << endl;
 	while (current != NULL)
 	{
-		cout << "³ëµå¼Ó ÀüÈ­¹øÈ£:" << current->DB_phone_num << endl;
+		cout << "ë…¸ë“œì† ì „í™”ë²ˆí˜¸:" << current->DB_phone_num << endl;
 		if (current->DB_phone_num == phonenum) {
-			//ÀÚ¸® -1ÀÌ¸é ÀÚÀ¯¼®ÀÓ -> ÀÚ¸®¼±ÅÃÇØÁà ->  db¿¡ ³Ö±â
+			//ìë¦¬ -1ì´ë©´ ììœ ì„ì„ -> ìë¦¬ì„ íƒí•´ì¤˜ ->  dbì— ë„£ê¸°
 			if (current->DB_seat_num == "-1") {
-				cout << "ÀÚ¸®¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä\nÂù¾ç ÇÔ¼ö È£ÃâÇØ¼­ ÀÚ¸®¹øÈ£100¹øÀ¸·Î ¹èÁ¤¹Ş¾Ò´Ù°í Ä§\n";
+				cout << "ìë¦¬ë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”\nì°¬ì–‘ í•¨ìˆ˜ í˜¸ì¶œí•´ì„œ ìë¦¬ë²ˆí˜¸100ë²ˆìœ¼ë¡œ ë°°ì •ë°›ì•˜ë‹¤ê³  ì¹¨\n";
 				//int_seatnum=seat.chooseSeat();
 				current->DB_seat_num = to_string(int_seatnum);
 			}
@@ -152,21 +112,21 @@ bool SeasonDB::readFile()
 {
 	string path = "season.txt";
 	ifstream file(path);
-	Season season;	//Seaon ±¸Á¶Ã¼¿¡ ´ã¾Æ°¥ º¯¼ö
+	Season season;	//Seaon êµ¬ì¡°ì²´ì— ë‹´ì•„ê°ˆ ë³€ìˆ˜
 
-	int person_num = 0;	//Á¤±â±Ç ÀÌ¿ëÀÚ¼ö
-	int data_num = 0;	//ÀÌ¿ëÀÚ´ç ÀÔ·ÂÇÒ µ¥ÀÌÅÍ ¼ö
-	string phone_num;	//ÀüÈ­¹øÈ£
-	string payment_date;	//°áÁ¦ÀÏ½Ã
-	string expert_date;	//¸¸·áÀÏ½Ã
-	string seat_num;	//ÀÚ¸®¹øÈ£
-	string arrival_time;	//ÀÔ½Ç½Ã°£
-	string departure_time;	//Åğ½Ç½Ã°£
-	string null_remove;	//°ø¹éÁ¦°Å
+	int person_num = 0;	//ì •ê¸°ê¶Œ ì´ìš©ììˆ˜
+	int data_num = 0;	//ì´ìš©ìë‹¹ ì…ë ¥í•  ë°ì´í„° ìˆ˜
+	string phone_num;	//ì „í™”ë²ˆí˜¸
+	string payment_date;	//ê²°ì œì¼ì‹œ
+	string expert_date;	//ë§Œë£Œì¼ì‹œ
+	string seat_num;	//ìë¦¬ë²ˆí˜¸
+	string arrival_time;	//ì…ì‹¤ì‹œê°„
+	string departure_time;	//í‡´ì‹¤ì‹œê°„
+	string null_remove;	//ê³µë°±ì œê±°
 
 	if (file.is_open())
 	{
-		cout << "ÆÄÀÏ Ãâ·Â È®ÀÎ\n";
+		cout << "íŒŒì¼ ì¶œë ¥ í™•ì¸\n";
 		file >> person_num;
 		file >> data_num;
 		//cout << person_num << data_num<<endl;
@@ -179,7 +139,7 @@ bool SeasonDB::readFile()
 			getline(file, arrival_time, '\n');
 			getline(file, departure_time, '\n');
 
-			//³ëµå¿¡ Å¬·¡½º Á¤º¸ ÀúÀå
+			//ë…¸ë“œì— í´ë˜ìŠ¤ ì •ë³´ ì €ì¥
 			AddNode(Season(phone_num, payment_date, expert_date, seat_num, arrival_time, departure_time));
 		}
 	}
@@ -195,14 +155,14 @@ void SeasonDB::signup(string phone_num, string payment_date, string expert_date,
 bool SeasonDB::writeFile()
 {
 	string path = "season.txt";
-	int person_num = cntSize;	//Á¤±â±Ç ÀÌ¿ëÀÚ¼ö
-	int data_num = 5;	//ÀÌ¿ëÀÚ´ç ÀÔ·ÂÇÒ µ¥ÀÌÅÍ ¼ö
-	string phone_num;	//ÀüÈ­¹øÈ£
-	string payment_date;	//°áÁ¦ÀÏ½Ã
-	string expert_date;	//¸¸·áÀÏ½Ã
-	string seat_num;	//ÀÚ¸®¹øÈ£
-	string arrival_time;	//ÀÔ½Ç½Ã°£
-	string departure_time;	//Åğ½Ç½Ã°£
+	int person_num = cntSize;	//ì •ê¸°ê¶Œ ì´ìš©ììˆ˜
+	int data_num = 5;	//ì´ìš©ìë‹¹ ì…ë ¥í•  ë°ì´í„° ìˆ˜
+	string phone_num;	//ì „í™”ë²ˆí˜¸
+	string payment_date;	//ê²°ì œì¼ì‹œ
+	string expert_date;	//ë§Œë£Œì¼ì‹œ
+	string seat_num;	//ìë¦¬ë²ˆí˜¸
+	string arrival_time;	//ì…ì‹¤ì‹œê°„
+	string departure_time;	//í‡´ì‹¤ì‹œê°„
 
 	ofstream file;
 	file.open(path, ios::out);
@@ -230,15 +190,15 @@ bool SeasonDB::writeFile()
 //	season.readFile();
 //	bool tf;
 //  
-//	season.signup("ÀüÈ­¹øÈ£","°áÁ¦ÀÏ½Ã","¸¸·áÀÏ½Ã","-1","ÀÔ½Ç½Ã°£","Åğ½Ç½Ã°£");
-//	//ÀçÀÔÀå °ü·Ã
-//	tf=season.searchSeasonDB("ÀüÈ­¹øÈ£");
+//	season.signup("ì „í™”ë²ˆí˜¸","ê²°ì œì¼ì‹œ","ë§Œë£Œì¼ì‹œ","-1","ì…ì‹¤ì‹œê°„","í‡´ì‹¤ì‹œê°„");
+//	//ì¬ì…ì¥ ê´€ë ¨
+//	tf=season.searchSeasonDB("ì „í™”ë²ˆí˜¸");
 //	if (tf)
 //
-//		cout << "ÀçÀÔÀå °¡´É\n";
+//		cout << "ì¬ì…ì¥ ê°€ëŠ¥\n";
 //	else
-//		cout << "ÀÔÀå ºÒ°¡\n";
-//	//Åğ½Ç °ü·Ã
+//		cout << "ì…ì¥ ë¶ˆê°€\n";
+//	//í‡´ì‹¤ ê´€ë ¨
 //	tf = season.searchSeasonDB("01037937506");
 //	season.deleteSeason("01037937506");
 //

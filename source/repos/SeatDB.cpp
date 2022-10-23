@@ -1,11 +1,11 @@
-#include "SeatDB.h"
+#include "header.h"
 
 bool SeatDB::readFile()
 {
 	string filename = "seat.txt";
 	ifstream fin(filename);
 	if (!fin.is_open()) {
-		cerr << "ÆÄÀÏ ÀĞ±â ½ÇÆĞ\n";
+		cerr << "íŒŒì¼ ì½ê¸° ì‹¤íŒ¨\n";
 		return false;
 	}
 
@@ -22,14 +22,14 @@ bool SeatDB::writeFile()
 	try {
 		ofstream fout(filename);
 		if (!fout.is_open()) {
-			cerr << "ÆÄÀÏ ¾²±â ½ÇÆĞ" << endl;
+			cerr << "íŒŒì¼ ì“°ê¸° ì‹¤íŒ¨" << endl;
 			return false;
 		}
 
 		for (int i = 0; i < SEAT_MAX; i++) {
 			fout << seat[i] << endl;
 		}
-		cout << "SeatDB ÀúÀåÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù." << endl;
+		cout << "SeatDB ì €ì¥ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤." << endl;
 	}
 	catch (exception& e) {
 		return false;
@@ -37,11 +37,11 @@ bool SeatDB::writeFile()
 	return false;
 }
 
-// ÇöÀçÁÂ¼®»óÅÂ º¸¿©ÁÖ´Â ÇÔ¼ö
+// í˜„ì¬ì¢Œì„ìƒíƒœ ë³´ì—¬ì£¼ëŠ” í•¨ìˆ˜
 void SeatDB::showSeat()
 {
 	readFile();
-	cout << "\n[           ÁÂ¼®ÇöÈ²          ]" << endl;
+	cout << "\n[           ì¢Œì„í˜„í™©          ]" << endl;
 	cout << "   1  2  3  4  5  6  7  8  9 10" << endl;
 	for (int i = 0; i < SEAT_MAX; i++) {
 		if (i % 10 == 0) {
@@ -56,15 +56,15 @@ void SeatDB::showSeat()
 	cout << endl;
 }
 
-// ÁÂ¼®¼±ÅÃ ÇÔ¼ö
+// ì¢Œì„ì„ íƒ í•¨ìˆ˜
 int SeatDB::chooseSeat(int memType)
 {
 	readFile();
-	string chooseS;	// »ç¿ëÀÚÀÔ·Â(ex: A3, C10)
+	string chooseS;	// ì‚¬ìš©ìì…ë ¥(ex: A3, C10)
 	do {
-		cout << "\n[           ÁÂ¼®¼±ÅÃ          ]\n" << endl;
+		cout << "\n[           ì¢Œì„ì„ íƒ          ]\n" << endl;
 		showSeat();
-		cout << "\nÁÂ¼®À» ¼±ÅÃÇÏ¼¼¿ä(ex: A3, C10)(ºó ÀÚ¸® => ¡à) : ";
+		cout << "\nì¢Œì„ì„ ì„ íƒí•˜ì„¸ìš”(ex: A3, C10)(ë¹ˆ ìë¦¬ => â–¡) : ";
 		cin >> chooseS;
 	} while (!checkInput(chooseS));
 
@@ -75,10 +75,10 @@ int SeatDB::chooseSeat(int memType)
 
 }
 
-// ÁÂ¼®¼±ÅÃ input°Ë»ç ÇÔ¼ö
+// ì¢Œì„ì„ íƒ inputê²€ì‚¬ í•¨ìˆ˜
 int SeatDB::checkInput(string s)
 {
-	string s1, s2;	// ex: ÀÔ·Â¹ŞÀº A3¿¡¼­ AºÎºĞ°ú 3ºÎºĞ
+	string s1, s2;	// ex: ì…ë ¥ë°›ì€ A3ì—ì„œ Aë¶€ë¶„ê³¼ 3ë¶€ë¶„
 	s1 = s.substr(0, 1);
 	s2 = s.substr(1);
 
@@ -108,14 +108,14 @@ int SeatDB::checkInput(string s)
 	}
 }
 
-// ¼±ÅÃ¹ŞÀº ÁÂ¼®¼öÁ¤
+// ì„ íƒë°›ì€ ì¢Œì„ìˆ˜ì •
 bool SeatDB::fixSeat(int memType, int idx)
 {
 	string fixStr;
-	if (memType == 1) {			// Á¤±â±ÇÁöÁ¤¼®
+	if (memType == 1) {			// ì •ê¸°ê¶Œì§€ì •ì„
 		fixStr = "2";
 	}
-	else if (memType == 2 || memType == 3) {	// Á¤±â±ÇÀÚÀ¯¼®, ´Ü±â±ÇÀÚÀ¯¼®
+	else if (memType == 2 || memType == 3) {	// ì •ê¸°ê¶Œììœ ì„, ë‹¨ê¸°ê¶Œììœ ì„
 		fixStr = "1";
 	}
 	else {
@@ -127,7 +127,7 @@ bool SeatDB::fixSeat(int memType, int idx)
 	return true;
 }
 
-// ¼±ÅÃ¹ŞÀº ÁÂ¼®»èÁ¦
+// ì„ íƒë°›ì€ ì¢Œì„ì‚­ì œ
 bool SeatDB::delSeat(int idx)
 {
 	readFile();
@@ -136,17 +136,17 @@ bool SeatDB::delSeat(int idx)
 	return true;
 }
 
-// 0,1,2 ¼ıÀÚ¸¦ '¡à','¢Ë','¡á'·Î ¹Ù²ãÁÜ
+// 0,1,2 ìˆ«ìë¥¼ 'â–¡','â–¦','â– 'ë¡œ ë°”ê¿”ì¤Œ
 string SeatDB::toChar(string seat)
 {
 	if (seat.compare("0") == 0) {
-		return "¡à";
+		return "â–¡";
 	}
 	else if (seat.compare("1") == 0) {
-		return "¢Ë";
+		return "â–¦";
 	}
 	else if (seat.compare("2") == 0) {
-		return "¡á";
+		return "â– ";
 	}
 	else {
 		return "??";

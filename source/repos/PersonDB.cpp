@@ -1,5 +1,4 @@
 #include "header.h"
-using namespace std;
 
 PersonDB::PersonDB(SeasonDB Season,OnedayDB Oneday,SeatDB Seat,Time time){
     initLinkedList();
@@ -171,7 +170,7 @@ bool PersonDB::signup(){
     int seatInt;
     string seatNum;
     if(inseat.compare("1")){
-        seatInt=seatDB.chooseSeat();
+        seatInt=seatDB.chooseSeat(stoi("1"));
         seatNum=to_string(seatInt);   
     }
     cout<<"결제로 이동합니다."<<endl;
@@ -187,11 +186,11 @@ bool PersonDB::signup(){
     }while(addrnt==false);
     if(inseat.compare("1")){
         //정기권 지정석
-        onedayDB.signup(PhoneNum,currentTime,endTime,seatNum);    
+        onedayDB.signup(PhoneNum,currentTime,endTime,seatNum,"0","0");    
     }
     else{
         //지금 자리없고 이따 필요할때
-        seasonDB.signup(PhoneNum,currentTime,endTime,"-1");    
+        seasonDB.signup(PhoneNum,currentTime,endTime,"-1","0","0");    
     }
     cout<<"회원가입이 완료되었습니다."<<endl;
 };
@@ -217,11 +216,11 @@ bool PersonDB::signup(string PhoneNum){
     }while(addrnt==false);
     if(inseat.compare("1")){
         //정기권 지정석
-        onedayDB.signup(PhoneNum,currentTime,endTime,seatNum);    
+        onedayDB.signup(PhoneNum,currentTime,endTime,seatNum,"0","0");    
     }
     else{
         //지금 자리없고 이따 필요할때
-        seasonDB.signup(PhoneNum,currentTime,endTime,"0");    
+        seasonDB.signup(PhoneNum,currentTime,endTime,"-1","0","0");    
     }
     cout<<"회원가입이 완료되었습니다."<<endl;
 };

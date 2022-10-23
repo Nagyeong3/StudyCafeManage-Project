@@ -1,5 +1,4 @@
-#include "Account.h"
-#include "Time.h"
+#include "header.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,13 +11,13 @@ void Account::readDB()
 	ifstream file;
 	file.open("account.txt");
 
-	if (!file) { //¿À·ùÃ³¸®
-		cout << "account open ¿À·ù\n";
+	if (!file) { //ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
+		cout << "account open ï¿½ï¿½ï¿½ï¿½\n";
 		exit(100);
 	}
 
 
-	//°¡°Ý ºÒ·¯¿À±â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	string read;
 	file.seekg(0);
@@ -38,8 +37,8 @@ void Account::writeDB()
 	ofstream file;
 	file.open("account.txt", ios::app);
 
-	if (!file) { //¿À·ùÃ³¸®
-		cout << "account open ¿À·ù\n";
+	if (!file) { //ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
+		cout << "account open ï¿½ï¿½ï¿½ï¿½\n";
 		exit(100);
 	}
 
@@ -72,16 +71,16 @@ string Account::payTicket(string seat)
 	stringstream ssInt(seat);
 	ssInt >> num;
 
-	//³¯Â¥ÀÔ·Â
+	//ï¿½ï¿½Â¥ï¿½Ô·ï¿½
 	int Date, Time;
-	cout << "\n³¯Â¥¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä (2022³â07¿ù21ÀÏ -> 20220721) : ";
+	cout << "\nï¿½ï¿½Â¥ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½ (2022ï¿½ï¿½07ï¿½ï¿½21ï¿½ï¿½ -> 20220721) : ";
 	cin >> Date;
 
 	Y = Date / 10000;
 	M = (Date % 10000) / 100;
 	D = (Date % 10000) % 100;
 
-	cout << "½Ã°£À» ÀÔ·ÂÇØÁÖ¼¼¿ä (16½Ã34ºÐ -> 1634)";
+	cout << "ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½ (16ï¿½ï¿½34ï¿½ï¿½ -> 1634)";
 	cin >> Time;
 
 	H = Time / 100;
@@ -89,14 +88,14 @@ string Account::payTicket(string seat)
 
 
 
-	//°áÁ¦Á¤º¸ÀÔ·Â
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½
 
-	if (num == 1 || num==2) {  //Á¤±â±Ç
+	if (num == 1 || num==2) {  //ï¿½ï¿½ï¿½ï¿½ï¿½
 		int choice;
-		cout << "1) 7ÀÏ ------- 70¿ø\n";
-		cout << "2) 14ÀÏ ------- 140¿ø\n";
-		cout << "3) 28ÀÏ ------- 280¿ø\n";
-		cout << "ÀÌ¿ëÇÏ½Ç ÀÌ¿ë±ÇÀ» ¼±ÅÃÇØÁÖ¼¼¿ä : ";
+		cout << "1) 7ï¿½ï¿½ ------- 70ï¿½ï¿½\n";
+		cout << "2) 14ï¿½ï¿½ ------- 140ï¿½ï¿½\n";
+		cout << "3) 28ï¿½ï¿½ ------- 280ï¿½ï¿½\n";
+		cout << "ï¿½Ì¿ï¿½ï¿½Ï½ï¿½ ï¿½Ì¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½ : ";
 		cin >> choice;
 
 		if (choice == 1) { 
@@ -123,12 +122,12 @@ string Account::payTicket(string seat)
 		}
 		
 
-	}else if (num == 3) {  //´ÜÀÏ±Ç
+	}else if (num == 3) {  //ï¿½ï¿½ï¿½Ï±ï¿½
 		int choice;
-		cout << "1) 8½Ã°£ ------- 8¿ø\n";
-		cout << "2) 16½Ã°£ ------- 16¿ø\n";
-		cout << "3) 24½Ã°£ ------- 24¿ø\n";
-		cout << "ÀÌ¿ëÇÏ½Ç ÀÌ¿ë±ÇÀ» ¼±ÅÃÇØÁÖ¼¼¿ä : ";
+		cout << "1) 8ï¿½Ã°ï¿½ ------- 8ï¿½ï¿½\n";
+		cout << "2) 16ï¿½Ã°ï¿½ ------- 16ï¿½ï¿½\n";
+		cout << "3) 24ï¿½Ã°ï¿½ ------- 24ï¿½ï¿½\n";
+		cout << "ï¿½Ì¿ï¿½ï¿½Ï½ï¿½ ï¿½Ì¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½ : ";
 		cin >> choice;
 
 		if (choice == 1) { 
@@ -146,10 +145,10 @@ string Account::payTicket(string seat)
 	}
 
 	
-	cout << price << "¿øÀÌ °áÁ¦µÇ¾ú½À´Ï´Ù.\n";
+	cout << price << "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.\n";
 	totalAccount += price;
 
 	
-	//ÀÌ ÇÔ ¼ö ³¡³ª°í ½Ã°£ °íÄ¡±â
+	//ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½
 }
 
