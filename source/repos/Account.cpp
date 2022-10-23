@@ -25,9 +25,8 @@ void Account::readDB()
 	getline(file, read);
 
 	int finshT;
-	stringstream ssInt(read);
-	ssInt >> totalAccount;
-
+	
+	totalAccount = stoi(read);
 	file.close();
 
 	
@@ -65,7 +64,7 @@ string Account::int2string(int I)
 
 string Account::payTicket(string seat)
 {
-	int num, price;
+	int num, price=0;
 	int fY, fM, fD, fH, fmin;
 	int hour, day;
 
