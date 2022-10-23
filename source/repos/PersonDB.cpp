@@ -12,7 +12,6 @@ void PersonDB::initLinkedList(){
     size=0;
 };
 bool PersonDB::addPerson(Person target){
-    //linkedlist에 
     if (size == 0) 
 	{
 		startPoint->PhoneNum=target.PhoneNum;
@@ -21,6 +20,8 @@ bool PersonDB::addPerson(Person target){
         startPoint->startDate=target.startDate;
         startPoint->endDate=target.endDate;
         startPoint->next=nullptr;
+        ++size;
+        return true;
 	}
 	else 
 	{
@@ -37,9 +38,10 @@ bool PersonDB::addPerson(Person target){
 			temp = temp->next;
 		}
 		temp->next = currentPoint;
+        ++size;
+        return true;
 	}
-	++size;
-    return true;
+	return false;
 };
 Person* PersonDB::searchPerson(string phonenum){
     
@@ -83,15 +85,39 @@ void PersonDB::showPersonInfo(string phonenum){
         cout<<"]"<<rtn->Name<<"고객님/"<<output<<" "<<leftTime<<"남았습니다."<<endl;
     }
 };
-bool PersonDB::deletePerson(string phonenum){
-    Person* current=startPoint->next;
-    Person* prev=startPoint;
-    if(prev!=NULL&&prev->PhoneNum==phonenum){
-        startPoint=prev->next;
-        free(prev);
+bool PersonDB::deletePerson(string Phonenum){
+    Person* nextptr=startPoint->next;
+    Person* target=startPoint;
+    int currentPoint=1;
+    if (size == 0) 
+	{
+		cout<<"회원이 없습니다."<<endl;
+        return false;
+	}
+	else if(currentPoint=1){
+        //startpoint
+        if(target->PhoneNum.compare(Phonenum)){
+            startPoint=target->next;
+            free(target);
+            cout<<"회원이 삭제되었습니다."<<endl;
+            return true;
+        }
+        
     }
-    else if(current)
-    cout<<"존재하지 않는 회원입니다."<<endl;
+    else{
+        while(currentPoint<=size){
+            if(nextptr->PhoneNum.compare(Phonenum)){
+                target->next=nextptr->next;
+                free(nextptr);
+                cout<<"회원이 삭제되었습니다."<<endl;
+                return true;
+            }else{
+                target=target->next;
+                nextptr=nextptr->next;
+            }
+        }
+    }
+    cout<<"입력한 회원정보가 존재하지 않습니다."<<endl;
     return false;
 };
 bool PersonDB::readFile(){
