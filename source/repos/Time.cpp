@@ -1,5 +1,4 @@
 #include "header.h"
-
 void Time::readData()
 {
 	ifstream file;
@@ -18,16 +17,12 @@ void Time::readData()
 	//Date읽기
 	getline(file, read);
 
-	int D;
-	stringstream ssInt(read);
-	ssInt >> D;
+	int D= stoi(read);
 
 	//Time읽기
 	getline(file, read);
 
-	int T;
-	stringstream ssInt(read);
-	ssInt >> T;
+	int T = stoi(read);
 
 	file.close();
 
@@ -63,14 +58,10 @@ void Time::insertTime()//시간입력함수
 {
 	// 이전시간 기록
 	cout << "이전시간은";
-	showTime();
+	cout << bY << "년" << int2string(bM) << "월" << int2string(bD)
+		<< "일\t" << int2string(bH) << "시" << int2string(bmin) << "분";
 	cout << "입니다.";
-	bY = Y;
-	bM = M;
-	bD = D;
-	bH = H;
-	bmin = min;
-	
+
 
 	cout << "날짜를 입력해주세요 (2022년07월21일 -> 20220721) : ";
 	cin >> Date;
@@ -84,7 +75,11 @@ void Time::insertTime()//시간입력함수
 
 	H = Time / 100;
 	min = Time % 100;
-
+	bY = Y;
+	bM = M;
+	bD = D;
+	bH = H;
+	bmin = min;
 }
 
 void Time::cleanDB()
@@ -95,17 +90,22 @@ void Time::cleanDB()
 
 }
 
+string Time::int2string(int I)
+{
+
+	if (I < 10) return to_string(0) + to_string(I);
+	else return to_string(I);
+
+
+}
+
 string Time::leftTime(string num, string finish)
 {
 	int lY, lM, lD, lH, lmin;  //끝난시간
 
 	//int로변경
-	int finshT;
-	stringstream ssInt(finish);
-	ssInt >> finshT;
-	int n;
-	stringstream ssInt(num);
-	ssInt >> n;
+	int finshT=stoi(finish);
+	int n=stoi(num);
 
 	int lDate = finshT / 10000;
 	int lTime = finshT % 10000;
@@ -141,7 +141,12 @@ string Time::leftTime(string num, string finish)
 
 void Time::showTime()
 {
-	cout << Y << "년" << M / 100 << "월" << D % 100 
-		<< "일\t"<<H<<"시"<< min<<"분";
+	cout << Y << "년" << int2string(M) << "월" << int2string(D)
+		<< "일\t"<< int2string (H)<<"시"<< int2string (min)<<"분";
 
+}
+
+string Time::returnTime()
+{
+	return int2string(Y) + int2string(M) +int2string(D) + int2string(H) + int2string(min) ;
 }
