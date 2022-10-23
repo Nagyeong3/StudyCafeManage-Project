@@ -16,5 +16,6 @@ public:
 	void cleanDB(); //정기권,단일권 정리
 	string leftTime(string num, string finish); //남은시간 계산
 	void showTime(); //시간출력 함수
+	string returnTime()
 
 };

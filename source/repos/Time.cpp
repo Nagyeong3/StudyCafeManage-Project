@@ -151,3 +151,8 @@ void Time::showTime()
 		<< "ÀÏ\t"<<H<<"½Ã"<< min<<"ºÐ";
 
 }
+
+string Time::returnTime()
+{
+	
+}
