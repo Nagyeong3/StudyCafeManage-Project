@@ -166,12 +166,14 @@ bool PersonDB::writeFile(){
     }
 };
 bool PersonDB::signup(){
-    //회원가입
-    string PhoneNum=inputPhoneNum();    
+    string PhoneNum=inputPhoneNum();
     string Name=inputName();
     string inseat=inputSeat();
+    int seatInt;
+    string seatNum;
     if(inseat.compare("1")){
-        inseat=seatDB.chooseSeat();    
+        seatInt=seatDB.chooseSeat();
+        seatNum=to_string(seatInt);   
     }
     cout<<"결제로 이동합니다."<<endl;
     Account acc;
@@ -184,7 +186,14 @@ bool PersonDB::signup(){
     do{
         addrnt=this->addPerson(Person(PhoneNum,Name,inseat,currentTime,endTime));
     }while(addrnt==false);
-    seasonDB.signup(PhoneNum,currentTime,endTime,inseat);
+    if(inseat.compare("1")){
+        //정기권 지정석
+        onedayDB.signup(PhoneNum,currentTime,endTime,seatNum);    
+    }
+    else{
+        //지금 자리없고 이따 필요할때
+        seasonDB.signup(PhoneNum,currentTime,endTime,"-1");    
+    }
     cout<<"회원가입이 완료되었습니다."<<endl;
 };
 bool PersonDB::signup(string PhoneNum){
@@ -193,7 +202,7 @@ bool PersonDB::signup(string PhoneNum){
     int seatInt;
     string seatNum;
     if(inseat.compare("1")){
-        seatInt=seatDB.chooseSeat();
+        seatInt=seatDB.chooseSeat(stoi("1"));
         seatNum=to_string(seatInt);   
     }
     cout<<"결제로 이동합니다."<<endl;
